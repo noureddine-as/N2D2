@@ -11,6 +11,22 @@ ifeq ($(CC),stxp70-clang)
   else
     OPT:=-keep -mcore=stxp70v4 -Mconfig=mult:yes -DNO_DIRENT -O2
   endif
+else ifeq ($(CC),$(filter $(CC),riscv64-linux-gcc riscv64-buildroot-linux-musl-gcc))
+  ifndef DEBUG
+    OPT:=-O3 -s -DNDEBUG -static
+
+    ifndef NOPARALLEL
+      OPT:=$(OPT) -fopenmp
+    endif
+
+    ifndef NOMARCH
+      OPT:=$(OPT) -march=rv64imafdc -mabi=lp64d
+    endif
+  else
+    OPT:=-g -pg -rdynamic
+  endif
+
+  OPT:=$(OPT) -std=c99
 else
   ifndef DEBUG
     OPT:=-O3 -s -DNDEBUG
