@@ -100,11 +100,17 @@ stxp70 :
 asmp :
 	$(MAKE) all "CC=stxp70-clang" "ASMP=1"
 
+riscv-musl :
+	$(MAKE) all "CC=riscv64-buildroot-linux-musl-gcc"
+
 run-stxp70 :
 	sxrunprof -prof-calltree=prof-calltree.txt -prof-flat=prof-flat.txt -prof-flat-with-inst=prof-flat-with-inst.txt ./bin/n2d2_test $(ARGS)
 
 run-asmp :
 	asmp_run -p gepop --vcd --vcd-traces=* -- ./bin/n2d2_test $(ARGS)
+
+run-riscv-qemu :
+	$(QEMU_LINUX_USER) ./bin/n2d2_test $(ARGS)
 
 debug :
 	$(MAKE) all "DEBUG=1"

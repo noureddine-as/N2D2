@@ -113,7 +113,8 @@ int main(int argc, char* argv[])
         unsigned int total = sortedFileList("stimuli", &fileList, 0);
 
 #ifdef _OPENMP
-        omp_set_num_threads(8);
+        // omp_set_num_threads(8);
+        omp_set_num_threads(12);
 #endif
 
 #ifdef SAVE_OUTPUTS
